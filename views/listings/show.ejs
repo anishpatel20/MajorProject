@@ -1,0 +1,157 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+
+    <body>
+        <div class="row">
+            <div class="col-8 offset-3 mt-2">
+                <h3>
+                    <%= list.title %>
+                </h3>
+            </div>
+            <div class="card col-6 offset-3 listing-card">
+                <img src="<%= list.image.url %>" class="card-img-top show-img" alt="listing_image">
+                <div class="card-body">
+                    <p class="card-text">
+                        Owned by <i>
+                            <%= list.owner.username %>
+                        </i>
+                    </p>
+                    <p class="card-text">
+                        <%= list.description %>
+                    </p>
+
+                    <p class="card-text"> &#8377;<%= list.price.toLocaleString("en-IN") %>
+                    </p>
+                    <!-- .toLocaleString("en-IN") this function use for the add comma in the price  -->
+                    <br>
+                    <p class="card-text">
+                        <%= list.location %>
+                    </p>
+                    <br>
+                    <p class="card-text">
+                        <%= list.country %>
+                    </p>
+
+                </div>
+            </div>
+
+
+            <% if(CurrUser && CurrUser._id.equals(list.owner._id)) { %>
+
+                <div class="btns">
+
+                    <a href="/listings/<%= list._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn"
+                        style="height:2.4rem">Edit</a>
+                    <br> <br>
+                    <form method="post" action="/listings/<%= list._id %>?_method=DELETE">
+                        <button class="btn btn-dark offset-4">Delete</button>
+                    </form>
+                </div>
+                <% } %>
+
+        </div>
+
+
+
+
+
+        <!-- for the adding review -->
+        <div class="col-8 offset-3 mb-3 ">
+            <% if(CurrUser) { %> <!-- for check the its logged in or not , of Curruser has info then its logged in-->
+                <h4>Leave a Review</h4>
+                <form method="post" action="/listings/<%= list.id%>/reviews" class="needs-validation" novalidate>
+
+
+                    <!-- <div class="mb-2 mt-2">
+                        <label for="rating" class="form-label"></label>
+                        <input type="range" min="1" max="5" name="review[rating]">
+                    </div> -->
+
+                    <div class="mb-2 mt-2">
+                        <label for="rating" class="form-label">Rating</label>
+                        <fieldset class="starability-slot">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                checked aria-label="No rating." />
+
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+
+
+
+                    <div class="mb-2 mt-2">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"
+                            required></textarea>
+                        <div class="invalid-feedback">Enter the some comments for review </div>
+                    </div>
+                    <button class="btn btn-outline-dark ">Submit</button>
+                </form>
+                <% } %>
+                    <hr>
+
+
+                    <%if(list.reviews.length> 0) {%>
+                        <div class="row">
+                            <p><b>All Review</b></p>
+                            <% for(review of list.reviews) {%>
+                                <div class="card col-5 mb-3 ms-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@ <%= review.author.username %>
+                                        </h5>
+                                        <p class="starability-result" data-rating="<%= review.rating %>">
+
+                                        </p>
+                                        <p class="card-text">
+                                            <%= review.comment %>
+                                        </p>
+
+                                        <% if(CurrUser) { %>
+                                            <form method="POST"
+                                                action="/listings/<%= list._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                class="mb-3">
+                                                <button class="btn btn-sm btn-dark">delete</button>
+                                            </form>
+                                            <% } %>
+                                    </div>
+
+                                </div>
+                                <% } %>
+                        </div>
+                    <% } %>
+        </div>
+
+        <!-- this div show the map and location that choosed -->
+        <div class="offset-3 mb-3">
+            <b>
+                <p style="font-size: 2rem;">Where You'll be</p>
+            </b>
+            <div id="map" data-coordinates='<%- JSON.stringify(list.geometry.coordinates) %>'></div>
+        </div>
+
+
+        <script>
+            const mapDiv = document.getElementById("map");
+            const coordinates = JSON.parse(mapDiv.dataset.coordinates);
+
+            const map = L.map('map')
+                .setView([coordinates[1], coordinates[0]], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            L.marker([coordinates[1], coordinates[0]])
+                .addTo(map)
+                .bindPopup("<%= list.title %>")
+                .openPopup();
+        </script>
+    </body>

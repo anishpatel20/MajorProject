@@ -1,0 +1,111 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+    <body>
+        <div class="row mt-2.5">
+            <div class="col-8 offset-2">
+                <h3>Create a new listing</h3>
+                <form method="post" action="/listings/<%= list._id %>?_method=PUT" novalidate class="needs-validation"
+                    enctype="multipart/form-data">
+
+                    <div class="mb-3"> <!-- mb-3 : margin bottom 3 -->
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" value="<%= list.title %>" name="listing[title]" class="form-control"
+                            required>
+                        <div class="valid-feedback">Title looks Good!</div>
+                        <div class="invalid-feedback">Enter the correct title</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Description</label>
+                        <textarea type="text" name="listing[description]" class="form-control"
+                            required><%= list.description %></textarea>
+                        <div class="invalid-feedback">Please enter the Description</div>
+                    </div>
+
+                    <div class="mb-3">
+                        Original Listing image
+                        <br>
+                        <img class="preview-image" src="<%= originalImageUrl %>">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="from-label">Upload New Image</label>
+                        <input type="file" value="<%= list.image %>" name="listing[image]" class="form-control">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="mb-3 col-md-4">
+                            <label for="price" class="from-label">Price</label>
+                            <input type="number" value="<%= list.price %>" name="listing[price]" class="form-control"
+                                required>
+                            <div class="invalid-feedback">Please enter the Price</div>
+                        </div>
+
+
+                        <div class="mb-3 col-md-8">
+                            <label for="Country" class="from-label">Country</label>
+                            <input type="text" value="<%= list.country %>" name="listing[country]" class="form-control"
+                                required>
+                            <div class="invalid-feedback">Please enter the Country</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="from-label">Location</label>
+                        <input type="text" value="<%= list.location %>" name="listing[location]" class="form-control"
+                            required>
+                        <div class="invalid-feedback">Please enter the Location</div>
+                    </div>
+
+
+                <!-- this is the input field for map -->
+
+                    <input type="hidden" name="listing[geometry][type]" value="Point">
+
+                    <input type="hidden" name="listing[geometry][coordinates][0]" id="lng"
+                        value="<%= list.geometry.coordinates[0] %>">
+
+                    <input type="hidden" name="listing[geometry][coordinates][1]" id="lat"
+                        value="<%= list.geometry.coordinates[1] %>">
+
+
+                    <!-- its show the old map that user was choosed  -->
+                    <div id="map" data-coordinates='<%- JSON.stringify(list.geometry.coordinates) %>'>
+                    </div>
+
+                    <button class="btn btn-dark edit-btn">Edit</button>
+
+                </form>
+
+                
+                <script>
+                    const mapDiv = document.getElementById("map");
+                    const coordinates = JSON.parse(mapDiv.dataset.coordinates);//we can get coordinates form the html tag
+
+                    var map = L.map('map')
+                        .setView([coordinates[1], coordinates[0]], 13);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19
+                    }).addTo(map);
+
+                    // Show old marker
+                    var marker = L.marker([coordinates[1], coordinates[0]])
+                        .addTo(map)
+                        .bindPopup("Current Location")
+                        .openPopup();
+
+                    map.on('click', function (e) {
+
+                        marker.setLatLng(e.latlng);
+
+                        document.getElementById("lat").value = e.latlng.lat;
+                        document.getElementById("lng").value = e.latlng.lng;
+                    });
+
+                </script>
+            </div>
+        </div>
+    </body>

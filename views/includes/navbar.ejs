@@ -1,0 +1,63 @@
+<style>
+  .search-btn{
+    background-color:#fe424d ;
+    color: #fff;
+    padding: 0 1rem 0 1rem;
+
+  }
+
+   .search-btn:hover{
+    background-color:#fe424d ;
+    color: #fff;
+  }
+
+  .search-btn  {
+    border-radius: 25px;
+    width: 10rem;
+    }
+
+  .search-btn i {
+    margin-right: 0.5rem; 
+    display: inline;
+  }
+
+  .search-input{
+    border-radius: 25px;
+    padding: 0.5rem 2rem 0.5rem 3rem;
+    
+  }
+</style>
+
+
+<nav class="navbar navbar-expand-md sticky-top bg-body-light border-bottom">
+  <!--we can change the background(bg) from hear light,  navbar-expand-md : lg -> md for when screen is medium size then navbar is toogle   -->
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"> <i class="fa-regular fa-compass"></i> </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <!-- search bar -->
+      <div class="navbar-nav ms-auto">
+        <form class="d-flex " role="search">
+          <input class="form-control me-2 search-input" type="search" placeholder="Search Destinations" />
+         <button class="btn search-btn" type="submit"> <i class="fa-solid fa-magnifying-glass"></i> Search</button>
+      </form>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <% if(!CurrUser){ %>
+          <a class="nav-link " href="/signup"><b>Signup</b></a>
+          <a class="nav-link" href="/login"><b>Login</b></a>
+          <% } else{%>
+            <a class="nav-link" href="/logout"><b>LogOut</b></a>
+            <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
