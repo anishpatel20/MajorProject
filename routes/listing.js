@@ -22,7 +22,11 @@ router
 
     
 
+//Privacy page
+router.get("/privacy",controllersListings.privacy);
 
+//term and condition page
+router.get("/terms",controllersListings.terms);
     
 //Create the new post get 
 router.get("/new",isLoggedIn,controllersListings.rendernewForm);
@@ -39,6 +43,7 @@ router
     .get(wrapAsync(controllersListings.showListings))
     //Delete the listing
     .delete(isLoggedIn,onOwner,wrapAsync(controllersListings.destroyListing));
+
 
 
 

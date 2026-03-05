@@ -1,5 +1,7 @@
 const listing = require("../models/listing.js")
 
+
+
 module.exports.index = async (req, res) => {
     const allListings = await listing.find({});
     res.render("listings/index.ejs", { allListings });
@@ -10,6 +12,15 @@ module.exports.rendernewForm = (req, res) => {
     res.render("listings/new.ejs");
 }
 
+//privacy page
+module.exports.privacy = (req,res)=>{
+    res.render("listings/privacy");
+}
+
+//term and condition page
+module.exports.terms = (req,res)=>{
+    res.render("listings/term");
+}
 
 module.exports.createListing = async (req, res) => {
     //now, we can store the url link of image from the cloud
@@ -89,3 +100,4 @@ module.exports.destroyListing = async (req, res) => {
     req.flash("success", "Deleted Listings successfully");
     res.redirect("/listings");
 }
+
