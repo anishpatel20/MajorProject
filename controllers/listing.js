@@ -7,11 +7,28 @@ module.exports.index = async (req, res) => {
     res.render("listings/index.ejs", { allListings });
 }
 
-
+//Category 
 module.exports.category = async(req,res)=>{
     let {category} = req.params;
     // console.log(category);
     const allListings = await listing.find({category:category});
+    res.render("listings/index.ejs",{allListings});
+}
+
+//Search the listing
+module.exports.search = async(req,res)=>{
+    let {q} = req.query;
+
+    const allListings = await listing.find({
+        $or:[
+            {title:{$regex:q,$options:"i"}},   //$regex means Regular Expression search. It allows MongoDB to find text that matches a pattern.
+            {location:{$regex:q,$options:"i"}}, //$options: "i" . This makes the search case insensitive eg:- Goa = goa = GOA
+            {country:{$regex:q,$options:"i"}},
+            {description:{$regex:q,$options:"i"}},
+            
+        ]
+    });
+
     res.render("listings/index.ejs",{allListings});
 }
 
@@ -28,6 +45,7 @@ module.exports.privacy = (req,res)=>{
 module.exports.terms = (req,res)=>{
     res.render("listings/term");
 }
+
 
 module.exports.createListing = async (req, res) => {
     //now, we can store the url link of image from the cloud

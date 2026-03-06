@@ -26,11 +26,13 @@ router
 router.get("/privacy",controllersListings.privacy);
 
 //term and condition page
-router.get("/terms",controllersListings.terms);
- 
+router.get("/terms",wrapAsync(controllersListings.terms));
+
 //Category
 router.get("/category/:category",wrapAsync(controllersListings.category));
 
+//Search
+router.get("/search",controllersListings.search);
 
 //Create the new post get 
 router.get("/new",isLoggedIn,controllersListings.rendernewForm);
