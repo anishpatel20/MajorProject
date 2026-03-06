@@ -30,6 +30,7 @@ body{
     color: #222222;
     margin-left: 0.7rem;
     text-decoration: underline;
+    margin-bottom: 1.25rem;
 }
 
 .f-info-links a:hover{

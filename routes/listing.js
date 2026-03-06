@@ -26,7 +26,7 @@ router
 router.get("/privacy",controllersListings.privacy);
 
 //term and condition page
-router.get("/terms",wrapAsync(controllersListings.terms));
+router.get("/terms",controllersListings.terms);
 
 //Category
 router.get("/category/:category",wrapAsync(controllersListings.category));

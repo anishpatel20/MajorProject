@@ -18,7 +18,9 @@ module.exports.category = async(req,res)=>{
 //Search the listing
 module.exports.search = async(req,res)=>{
     let {q} = req.query;
-
+    if(!q){
+         return res.redirect("/listings");
+         }
     const allListings = await listing.find({
         $or:[
             {title:{$regex:q,$options:"i"}},   //$regex means Regular Expression search. It allows MongoDB to find text that matches a pattern.
@@ -32,19 +34,23 @@ module.exports.search = async(req,res)=>{
     res.render("listings/index.ejs",{allListings});
 }
 
-module.exports.rendernewForm = (req, res) => {
-    res.render("listings/new.ejs");
-}
+
 
 //privacy page
 module.exports.privacy = (req,res)=>{
-    res.render("listings/privacy");
+    res.render("listings/privacy.ejs");
 }
 
 //term and condition page
 module.exports.terms = (req,res)=>{
-    res.render("listings/term");
+    res.render("listings/term.ejs");
 }
+
+
+module.exports.rendernewForm = (req, res) => {
+    res.render("listings/new.ejs");
+}
+
 
 
 module.exports.createListing = async (req, res) => {
@@ -84,13 +90,13 @@ module.exports.renderEditForm = async (req, res) => {
     const list = await listing.findById(id);
     if (!list) {
         req.flash("error", "Lisiting you requested does not exist!");
-        res.redirect("/listings");
+         return res.redirect("/listings");
     }
-    else {
+    
         let originalImageUrl = list.image.url;
         originalImageUrl = originalImageUrl.replace("/upload","/upload/h_300,w_250"); // use for the decrease the quality of the image , we use more featrues like blur etc..
         res.render("listings/edit.ejs", { list ,originalImageUrl});
-    }
+    
 }
 
 
