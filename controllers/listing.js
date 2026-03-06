@@ -8,6 +8,13 @@ module.exports.index = async (req, res) => {
 }
 
 
+module.exports.category = async(req,res)=>{
+    let {category} = req.params;
+    // console.log(category);
+    const allListings = await listing.find({category:category});
+    res.render("listings/index.ejs",{allListings});
+}
+
 module.exports.rendernewForm = (req, res) => {
     res.render("listings/new.ejs");
 }
@@ -80,7 +87,7 @@ module.exports.UpdateListings = async (req, res) => {
 
     let list = await listing.findByIdAndUpdate(id, { ...req.body.listing }); // we need to do deconstruct the body , we can convert into the individual value
 
-    console.log(req.file);
+    // console.log(req.file);
     if (typeof req.file != "undefined") {
         let url = req.file.path;
         let filename = req.file.filename;

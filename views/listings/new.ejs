@@ -5,7 +5,7 @@
       <div class="col-8 offset-2">
         <h3>Create a new listing</h3>
         <br><br>
-        <form method="post" action="/listings" class="needs-validation" novalidate  enctype="multipart/form-data">
+        <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
           <!-- needs-validation use for the , if the input is empty them show error .  and novalidate use for off the default validation of the browser -->
 
           <div class="mb-3 "> <!-- mb-3 : margin bottom 3 -->
@@ -31,11 +31,37 @@
             <input type="text" placeholder="Enter the image Url/Link" name="listing[image]" class="form-control">
           </div> -->
 
-          <div class="mb-3">
-            <label for="image" class="from-label">Upload Image</label>
-            <input type="file"  name="listing[image]" class="form-control" required>
-            
+
+          <div class="row">
+
+            <div class="mb-3 col-md-4">
+              <label for="image" class="from-label">Upload Image</label>
+              <input type="file" name="listing[image]" class="form-control" required>
+            </div>
+
+            <div class="mb-3 col-md-8">
+              <label for="category" class="form-label">Select the Category</label>
+              <select name="listing[category]" class="form-control" required>
+                <option value="">Select Category</option>
+                <option value="trending">Trending</option>
+                <option value="iconic_cities">Iconic cities</option>
+                <option value="beach">Beach</option>
+                <option value="mountain">Mountain</option>
+                <option value="castle">Castle</option>
+                <option value="Amazing_pool">Amazing pool</option>
+                <option value="arctic">Arctic</option>
+                <option value="camping">Camping</option>
+                <option value="farm">Farm</option>
+                <option value="luxury">Luxury</option>
+                <option value="tree_house">Tree house</option>
+                <option value="room">Room</option>
+                <option value="house_boat">house boat</option>
+                <option value="others">others</option>
+              </select>
+            </div>
+
           </div>
+
 
           <div class="row">
 
@@ -58,7 +84,7 @@
           <div class="mb-3">
             <label for="location" class="from-label">Location</label>
             <input type="text" placeholder="Enter the Location" name="listing[location]" class="form-control" required>
-            
+
             <div class="invalid-feedback"> Please Enter the Location</div>
           </div>
 
@@ -78,9 +104,9 @@
           <br><br>
         </form>
 
-         
-        <script> 
-          
+
+        <script>
+
           // this is the default map corridanate
           var map = L.map('map').setView([23.0225, 72.5714], 12);
 
@@ -101,7 +127,7 @@
             document.getElementById("lat").value = e.latlng.lat;
             document.getElementById("lng").value = e.latlng.lng;
           });
-        
+
 
         </script>
       </div>

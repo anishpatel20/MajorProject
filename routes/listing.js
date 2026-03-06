@@ -27,7 +27,11 @@ router.get("/privacy",controllersListings.privacy);
 
 //term and condition page
 router.get("/terms",controllersListings.terms);
-    
+ 
+//Category
+router.get("/category/:category",wrapAsync(controllersListings.category));
+
+
 //Create the new post get 
 router.get("/new",isLoggedIn,controllersListings.rendernewForm);
 
