@@ -8,41 +8,43 @@ module.exports.index = async (req, res) => {
 }
 
 //Category 
-module.exports.category = async(req,res)=>{
-    let {category} = req.params;
+module.exports.category = async (req, res) => {
+    let { category } = req.params;
     // console.log(category);
-    const allListings = await listing.find({category:category});
-    res.render("listings/index.ejs",{allListings});
+    const allListings = await listing.find({ category: category });
+    res.render("listings/index.ejs", { allListings });
 }
 
 //Search the listing
-module.exports.search = async(req,res)=>{
-    let {q} = req.query;
-    if(!q){
-         return res.redirect("/listings");
-         }
+module.exports.search = async (req, res) => {
+    let { q } = req.query;
+    
+    if (!q) {
+        return res.redirect("/listings");
+    }
+
     const allListings = await listing.find({
-        $or:[
-            {title:{$regex:q,$options:"i"}},   //$regex means Regular Expression search. It allows MongoDB to find text that matches a pattern.
-            {location:{$regex:q,$options:"i"}}, //$options: "i" . This makes the search case insensitive eg:- Goa = goa = GOA
-            {country:{$regex:q,$options:"i"}},
-            {description:{$regex:q,$options:"i"}},
-            
+        $or: [
+            { title: { $regex: q, $options: "i" } },   //$regex means Regular Expression search. It allows MongoDB to find text that matches a pattern.
+            { location: { $regex: q, $options: "i" } }, //$options: "i" . This makes the search case insensitive eg:- Goa = goa = GOA
+            { country: { $regex: q, $options: "i" } },
+            { description: { $regex: q, $options: "i" } },
+
         ]
     });
 
-    res.render("listings/index.ejs",{allListings});
+    res.render("listings/index.ejs", { allListings });
 }
 
 
 
 //privacy page
-module.exports.privacy = (req,res)=>{
+module.exports.privacy = (req, res) => {
     res.render("listings/privacy.ejs");
 }
 
 //term and condition page
-module.exports.terms = (req,res)=>{
+module.exports.terms = (req, res) => {
     res.render("listings/term.ejs");
 }
 
@@ -90,13 +92,13 @@ module.exports.renderEditForm = async (req, res) => {
     const list = await listing.findById(id);
     if (!list) {
         req.flash("error", "Lisiting you requested does not exist!");
-         return res.redirect("/listings");
+        return res.redirect("/listings");
     }
-    
-        let originalImageUrl = list.image.url;
-        originalImageUrl = originalImageUrl.replace("/upload","/upload/h_300,w_250"); // use for the decrease the quality of the image , we use more featrues like blur etc..
-        res.render("listings/edit.ejs", { list ,originalImageUrl});
-    
+
+    let originalImageUrl = list.image.url;
+    originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_300,w_250"); // use for the decrease the quality of the image , we use more featrues like blur etc..
+    res.render("listings/edit.ejs", { list, originalImageUrl });
+
 }
 
 

@@ -68,22 +68,27 @@ body{
     margin-bottom: 2rem;
 }
 
+
+.listing-card:hover{
+    transform: scale(1.05);
+    /* box-shadow: 0 12px 25px rgba(0,0,0,0.2); */
+}
+
+
+
 .card-img-top{
     border-radius: 1rem !important;
     width: 100% !important;
     object-fit: cover !important;
 
 }
-
-
-
   /* text padding is the zero*/
 .card-body{  
     padding: 0 !important;
 }
 
 .card-text p{
-    
+
     font-weight: 400 !important;
 }
 
