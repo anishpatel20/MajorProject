@@ -212,11 +212,14 @@ body {
 
     .login-form,
     .signup-form,
-    .show-listing-card {
+    .show-listing-card ,
+    .new-from{
         width: 100% !important;
     }
 
     .edit-btn{
         width: 5rem !important;
     }
+
+
 }
