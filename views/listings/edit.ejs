@@ -3,7 +3,7 @@
     <body>
         <div class="row mt-2.5">
             <div class="col-8 offset-2">
-                <h3>Create a new listing</h3>
+                <h3>Edit the listing</h3>
                 <form method="post" action="/listings/<%= list._id %>?_method=PUT" novalidate class="needs-validation"
                     enctype="multipart/form-data">
 
@@ -94,8 +94,10 @@
                         value="<%= list.geometry.coordinates[1] %>">
 
 
+                   <div class="map">
                     <!-- its show the old map that user was choosed  -->
                     <div id="map" data-coordinates='<%- JSON.stringify(list.geometry.coordinates) %>'>
+                    </div>
                     </div>
 
                     <button class="btn btn-dark edit-btn">Edit</button>

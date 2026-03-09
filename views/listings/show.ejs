@@ -7,7 +7,7 @@
                     <%= list.title %>
                 </h3>
             </div>
-            <div class="card col-6 offset-3 listing-card">
+            <div class="card col-6 offset-3 listing-card show-listing-card">
                 <img src="<%= list.image.url %>" class="card-img-top show-img" alt="listing_image">
                 <div class="card-body">
                     <p class="card-text">
@@ -43,7 +43,7 @@
                         style="height:2.4rem">Edit</a>
                     <br> <br>
                     <form method="post" action="/listings/<%= list._id %>?_method=DELETE">
-                        <button class="btn btn-dark offset-4">Delete</button>
+                        <button class="btn btn-dark offset-4 ">Delete</button>
                     </form>
                 </div>
                 <% } %>
@@ -55,7 +55,7 @@
 
 
         <!-- for the adding review -->
-        <div class="col-8 offset-3 mb-3 ">
+        <div class="col-8 offset-3 mb-3  review">
             <% if(CurrUser) { %> <!-- for check the its logged in or not , of Curruser has info then its logged in-->
                 <h4>Leave a Review</h4>
                 <form method="post" action="/listings/<%= list.id%>/reviews" class="needs-validation" novalidate>
@@ -103,7 +103,7 @@
                         <div class="row">
                             <p><b>All Review</b></p>
                             <% for(review of list.reviews) {%>
-                                <div class="card col-5 mb-3 ms-3">
+                                <div class="card col-5 mb-3 ms-3 ">
                                     <div class="card-body">
                                         <h5 class="card-title">@ <%= review.author.username %>
                                         </h5>
@@ -130,7 +130,7 @@
         </div>
 
         <!-- this div show the map and location that choosed -->
-        <div class="offset-3 mb-3">
+        <div class="offset-3 mb-3 map">
             <b>
                 <p style="font-size: 2rem;">Where You'll be</p>
             </b>

@@ -2,7 +2,7 @@
 
   <body>
     <div class="row mt-3">
-      <div class="col-8 offset-2">
+      <div class="col-8 offset-2 new-from">
         <h3>Create a new listing</h3>
         <br><br>
         <form method="post" action="/listings" class="needs-validation" novalidate enctype="multipart/form-data">
@@ -95,7 +95,7 @@
           <input type="hidden" name="listing[geometry][coordinates][1]" id="lat">
 
           <!-- this is the map  -->
-          <div class="mb-3">
+          <div class="mb-3 map">
             <p>Marks Your location:</p>
             <div id="map"></div>
           </div>

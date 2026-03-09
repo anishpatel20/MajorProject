@@ -26,29 +26,35 @@
     padding: 0.5rem 2rem 0.5rem 3rem;
     
   }
+
 </style>
 
 
-<nav class="navbar navbar-expand-md sticky-top bg-body-light border-bottom">
+<nav class="navbar navbar-expand-sm sticky-top bg-body-light border-bottom">
   <!--we can change the background(bg) from hear light,  navbar-expand-md : lg -> md for when screen is medium size then navbar is toogle   -->
   <div class="container-fluid">
     <a class="navbar-brand" href="/listings"> <i class="fa-regular fa-compass"></i> </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+
+    <!-- this is the hampburger -->
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
 
-      <!-- search bar -->
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex " role="search" method="get" action="/listings/search" >
-          <input class="form-control me-2 search-input" type="search" name="q" placeholder="Search Destinations" />
-         <button class="btn search-btn" type="submit"> <i class="fa-solid fa-magnifying-glass"></i> Search</button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> <!-- when size become small then all item in this div will set in hamburger  -->
+
+    <div class="navbar-nav">
+      <a class="nav-link explore" href="/listings">Explore</a>
+    </div>
+    
+    <!-- search bar -->
+    <div class="navbar-nav ms-auto search-bar ">
+      <form class="d-flex " role="search" method="get" action="/listings/search" >
+        <input class="form-control me-2 search-input" type="search" name="q" placeholder="Search Destinations" />
+        <button class="btn search-btn" type="submit"> <i class="fa-solid fa-magnifying-glass"></i> Search</button>
       </form>
-      </div>
-
+    </div>
+    
+    
       <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if(!CurrUser){ %>
